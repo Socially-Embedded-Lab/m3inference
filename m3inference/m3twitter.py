@@ -57,6 +57,7 @@ class M3Twitter(M3Inference):
         input is either a Twitter tweet object (https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/tweet-object)
             or a Twitter user object (https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/user-object)
         """
+        image_status = "user"
         if isinstance(input, str):
             input = json.loads(input)
 
@@ -80,6 +81,7 @@ class M3Twitter(M3Inference):
             else:
                 img_file_resize = img_path
         elif user["default_profile_image"]:
+            image_status = "default"
             # Default profile image
             img_file_resize = TW_DEFAULT_PROFILE_IMG
         else:
@@ -95,6 +97,7 @@ class M3Twitter(M3Inference):
                     download_resize_img(img_path, img_file_resize)
         # check if an error occurred and the image was not downloaded
         if not os.path.exists(img_file_resize):
+            image_status = "error_default"
             img_file_resize = TW_DEFAULT_PROFILE_IMG
 
         bio = user["description"]
@@ -116,7 +119,8 @@ class M3Twitter(M3Inference):
             "img_path": img_file_resize,
             "lang": lang,
             "name": user["name"],
-            "screen_name": user["screen_name"]
+            "screen_name": user["screen_name"],
+            "img_stat": image_status #keep track of image download status
         }
         return output
 

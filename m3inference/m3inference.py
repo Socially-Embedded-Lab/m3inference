@@ -166,6 +166,8 @@ class M3Inference:
         df.columns = columns
         df['id'] = [i['id'] for i in data]
         df = df[['id'] + columns]
+        #keep the image status - indication if image was downloaded succesfully
+        df['img_status'] = [i['img_stat'] for i in data]
 
         if len(set(df['id'])) != len(df['id']):
             logger.warning('There are duplicated ids in the dataframe. Please double-check the input data.')
