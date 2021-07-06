@@ -4,7 +4,6 @@ import os
 from m3inference.m3twitter import M3Twitter
 import logging
 import time
-import m3inference
 
 def check_is_default_profile_image(image_url):
     if image_url == "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png":
